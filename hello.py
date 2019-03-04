@@ -3,6 +3,7 @@ from flask import Flask, render_template, session, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_wtf import FlaskForm
+from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -18,6 +19,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 db = SQLAlchemy(app)
+manager = Manager(app)
+migrate = Migrate(app, db)
+manager.add_command('db', MigrateCommand)
 
 
 class Role(db.Model):
@@ -80,4 +84,4 @@ def internal_server_error(e):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    manager.run()
