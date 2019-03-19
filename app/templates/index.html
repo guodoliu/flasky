@@ -17,7 +17,7 @@
 </div>
 <div>
     {% if current_user.can(Permission.WRITE) %}
-    {{ wtf.quick_form() }}
+    {{ wtf.quick_form(form) }}
     {% endif %}
 </div>
 {% include '_posts.html' %}
@@ -26,4 +26,9 @@
     {{ macros.pagination_widget(pagination, '.index') }}
 </div>
 {% endif %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
 {% endblock %}
